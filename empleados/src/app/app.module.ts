@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EmpleadosListComponent } from './components/empleados-list/empleados-list.component';
 import { CountEmpleadosComponent } from './components/empleados-list/count-empleados/count-empleados.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { CountEmpleadosComponent } from './components/empleados-list/count-emple
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

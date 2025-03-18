@@ -1,33 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, Input, input, OnInit, Output } from '@angular/core';
 import { Empleado } from '../../interfaces/empleados.interface';
+import { EmpleadosService } from '../../services/empleados.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-empleados-list',
   templateUrl: './empleados-list.component.html',
   styleUrl: './empleados-list.component.css'
 })
-export class EmpleadosListComponent {
+export class EmpleadosListComponent implements OnInit {
 
-  public empleados:Empleado[] = [
-    {id:1, nombre: 'Juan', apellido: 'Perez', genero: 'Masculino', salario:500},
-    {id:2, nombre: 'Marcos', apellido: 'Gonzales', genero: 'Masculino', salario:600},
-    {id:3, nombre: 'Marta', apellido: 'Garcia', genero: 'Femenino', salario:700},
-    {id:4, nombre: 'Ignacio', apellido: 'Cortes', genero: 'Masculino', salario:800},
-    {id:5, nombre: 'Maria', apellido: 'Navarro', genero: 'Femenino', salario:900},
-    {id:6, nombre: 'Joaquin', apellido: 'Marquez', genero: 'Masculino', salario:1000}
-  ]
+  public empleados:Empleado[] = [];
+  public radioButtonSeleccionado:string = 'Todos';
+
+  constructor(private empleadoService:EmpleadosService){}
+
+  ngOnInit(): void {
+    this.empleados = this.empleadoService.ObtenerEmpleados;
+  }
+
+
+  public filtrarGenero = (genero:string):void => {
+    this.empleados = this.empleadoService.filtrarGenero(genero);
+  }
 
 
  get obtenerTotal():number{
-    return this.empleados.length;
+   return this.empleadoService.obtenerTotal();
   }
 
   get obtenerMasculinos():number{
-    return this.empleados.filter(empleado => empleado.genero === 'Masculino').length;
+    return this.empleadoService.obtenerMasculinos();
   }
 
  get  obtenerFemeninos():number{
-    return this.empleados.filter(empleados => empleados.genero === 'Femenino').length;
+    return this.empleadoService.obtenerFemeninos();
   }
 
 }
